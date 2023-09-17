@@ -450,4 +450,191 @@ int main()
 
 4. Implement a C function that checks whether a given string is a palindrome or not. Explain the logic behind your code and provide test cases to verify its correctness.
 
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
 
+int is_palindrome(const char *str)
+{
+	int left = 0;
+    	int right = strlen(str) - 1;
+
+    	while (left < right)
+	{
+        	while (!isalnum(str[left]))
+		{
+            		left++;
+        	}
+        	while (!isalnum(str[right]))
+		{
+            		right--;
+        	}
+        	char left_char = tolower(str[left]);
+       		char right_char = tolower(str[right]);
+
+        	if (left_char != right_char)
+		{
+            		return 0;
+        	}
+        	left++;
+        	right--;
+    	}
+    	return 1;
+}
+
+int main()
+{
+	const char *str1 = "A man, a plan, a canal, Panama";
+    	const char *str2 = "racecar";
+    	const char *str3 = "hello";
+
+    	printf("%d\n", is_palindrome(str1));
+    	printf("%d\n", is_palindrome(str2));
+    	printf("%d\n", is_palindrome(str3));
+
+    	return 0;
+}
+
+5. Implement a C program that generates the Fibonacci sequence up to a user-specified number of terms. Explain the concept of the Fibonacci sequence and how your program generates it.
+
+#include <stdio.h>
+
+int main()
+{
+	int n, i;
+    	long long int term1 = 0, term2 = 1, nextTerm;
+
+    	printf("Enter the number of terms: ");
+    	scanf("%d", &n);
+
+    	if (n <= 0)
+	{
+        	printf("Please enter a positive integer.\n");
+        	return 1;
+    	}
+    	printf("Fibonacci Sequence up to %d terms:\n", n);
+    	printf("%lld, %lld, ", term1, term2);
+
+    	for (i = 2; i < n; i++)
+	{
+        	nextTerm = term1 + term2;
+        	printf("%lld, ", nextTerm);
+        	term1 = term2;
+        	term2 = nextTerm;
+    	}
+    	printf("\n");
+    	return 0;
+}
+
+6. Write a C function to sort an array of integers using the bubble sort algorithm. Explain how the algorithm works and its time complexity. Include a demonstration of the sorting function with sample input data.
+
+#include <stdio.h>
+
+void bubbleSort(int arr[], int n)
+{
+	int temp;
+    	int swapped;
+
+    	for (int i = 0; i < n - 1; i++)
+	{
+        	swapped = 0;
+        	for (int j = 0; j < n - i - 1; j++)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+                		temp = arr[j];
+                		arr[j] = arr[j + 1];
+                		arr[j + 1] = temp;
+                		swapped = 1;
+            		}
+        	}
+        	if (swapped == 0)
+		{
+			break;
+        	}
+    	}
+}
+
+int main()
+{
+	int arr[] = {64, 25, 12, 22, 11};
+    	int n = sizeof(arr) / sizeof(arr[0]);
+
+    	printf("Original array: ");
+    	for (int i = 0; i < n; i++)
+	{
+        	printf("%d ", arr[i]);
+    	}
+    	printf("\n");
+
+    	bubbleSort(arr, n);
+
+    	printf("Sorted array: ");
+    	for (int i = 0; i < n; i++)
+	{
+        	printf("%d ", arr[i]);
+    	}
+    	printf("\n");
+    	return 0;
+}
+
+Algorithms and Data Structures
+
+* Searching and Sorting Algorithms
+
+1. Can you explain the concept of binary search and give an example of how it is used to search for an element in a sorted array?
+
+- Imagine you have a big list of items, but it's neatly sorted from small to big.
+- You don't start looking from the beginning or randomly. Instead, you open the book somewhere in the middle.
+- You look at the item in the middle and compare it with what you're searching for. If it's a match, great! You found it!
+- If it's not a match, you use the information to your advantage. If the item in the middle is bigger than what you're looking for, you know the thing you want is not in the bigger half of the list. So, you throw away that bigger half and only focus on the smaller half.
+- Then, you repeat steps 2 to 4 with the smaller half. You keep doing this over and over, cutting your search area in half each time.
+- Eventually, you'll either find the item you're looking for, or you'll figure out that it's not in the list.
+
+#include <stdio.h>
+
+int binary_search(int arr[], int size, int target)
+{
+	int left = 0;
+    	int right = size - 1;
+
+    	while (left <= right)
+	{
+        	int mid = left + (right - left) / 2;
+
+        	if (arr[mid] == target)
+		{
+            		return mid;
+        	}
+		else if (arr[mid] < target)
+		{
+            		left = mid + 1;
+        	}
+		else
+		{
+            		right = mid - 1;
+        	}
+    	}
+    	return -1;
+}
+
+int main()
+{
+	int sorted_array[] = {2, 4, 6, 8, 10, 12, 14, 16};
+    	int target = 10;
+    	int size = sizeof(sorted_array) / sizeof(sorted_array[0]);
+    
+    	int result = binary_search(sorted_array, size, target);
+    
+    	if (result != -1)
+	{
+        	printf("Element %d found at index %d\n", target, result);
+    	}
+	else
+	{
+        	printf("Element %d not found in the array\n", target);
+    	}
+    	return 0;
+}
+
+2. What is bubble sort and how does it work? Can you provide an example of its implementation in an array?
