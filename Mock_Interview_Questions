@@ -1,0 +1,453 @@
+Mock Interview Questions
+
+Basic Concepts
+
+* Fundamental Concepts
+
+1. Explain the concept of a function in C programming and elaborate on its significance
+in software development
+
+- A mini-program inside a bigger program.
+- Does a specific job.
+- Reusability: Use the same job many times.
+- Organization: Keep the program neat and tidy.
+- Understandability: Easier to read and follow.
+- Testing: Easier to find and fix mistakes.
+- Collaboration: Helps teams work together.
+
+Example:
+int add(int a, int b)
+{
+    return a + b;
+}
+
+In this example, the add function adds two numbers (a and b).
+You can use it whenever you need to add numbers in your program.
+It makes your code more organized and understandable.
+
+2. Differentiate between 'for' and 'while' loops in C. When would you use one over the other?
+
+'for' Loop:
+
+- Structure: for (initialization; condition; increment/decrement)
+Use When:
+- Known number of iterations.
+- Loop control in one line.
+- Iterating over a range.
+- Specific number of repetitions.
+
+- Example:
+
+#include <stdio.h>
+
+int main()
+{
+	for (int i = 0; i < 5; i++)
+	{
+        	printf("Iteration %d\n", i);
+	}
+    	return 0;
+}
+
+'while' Loop:
+
+- Structure: while (condition)
+Use When:
+- Unknown number of iterations.
+- Loop control inside loop body.
+- Dynamic termination conditions.
+- Reading data until a condition is met.
+
+- Example:
+
+#include <stdio.h>
+
+int main()
+{
+	int x = 0;
+
+	while (x < 5)
+	{
+        	printf("Value of x: %d\n", x);
+        	x++;
+    	}
+    	return 0;
+}
+
+Choose 'for' when you know how many times to repeat, and 'while' when you're uncertain or need more flexible control.
+
+3. How does recursion work in C, and what are its advantages and limitations?
+
+- Function Calls Itself: In recursion, a function can call itself.
+- Base Case: It's a condition that tells the function when to stop calling itself.
+- It's like an exit point for the recursion.
+- Recursive Case: This is where the function calls itself but with a smaller or simpler problem.
+
+Advantages:
+
+- Elegance: Recursion makes your code more elegant and easier to understand for certain problems.
+- Solves Complex Problems: It simplifies complex problems by breaking them into smaller parts.
+- Versatile: You can use recursion to solve various problems, like sorting or traversing trees.
+
+Limitations:
+
+- Performance: Recursive solutions can be slower because they involve function calls, which can add overhead.
+- Memory Usage: Each function call consumes memory, so too many calls can lead to memory problems.
+- Debugging Challenge: Debugging recursive code can be tricky because it's harder to trace the flow of execution.
+- Not for All Problems: Recursion isn't suitable for every problem; some problems don't naturally lend themselves to recursion.
+
+-Example:
+
+#include <stdio.h>
+
+unsigned long long factorial(int n)
+{
+	if (n == 0)
+	{
+        	return 1;
+    	}
+    	else
+        	return n * factorial(n - 1);
+}
+
+int main()
+{
+	int n;
+
+	printf("Enter a non-negative integer: ");
+    	scanf("%d", &n);
+
+    	if (n < 0)
+	{
+        	printf("Factorial is not defined for negative numbers.\n");
+    	}
+	else
+	{
+        	unsigned long long result = factorial(n);
+        	printf("Factorial of %d is %llu\n", n, result);
+	}
+    	return 0;
+}
+
+Remember, when using recursion, define a base case to stop it from going forever, and be cautious of memory usage and performance for deep recursions.
+
+4. How do loops contribute to efficient program execution in C? Provide an example of a real-world scenario where using a loop is essential for solving a problem
+
+- Repetition: Loops allow you to execute a block of code multiple times without the need to write the same code over and over. This reduces redundancy and helps maintain a clean and concise codebase.
+- Efficiency: Instead of manually writing code for each iteration, loops automate the process, making programs more efficient and less error-prone.
+- Flexibility: Loops can adapt to different input sizes or conditions, making them versatile for various tasks.
+- Reduced Memory Usage: With loops, you can work with data structures like arrays and lists without the need to allocate memory and write code for each element individually.
+
+- Example:
+
+Scenario: Calculating the Average of a List of Numbers
+
+#include <stdio.h>
+
+int main()
+{
+	int numbers[] = {5, 10, 15, 20, 25};
+    	int sum = 0;
+
+    	for (int i = 0; i < 5; i++)
+        	sum += numbers[i];
+
+    	double average = (double)sum / 5;
+
+	printf("Average: %.2lf\n", average);
+    	return 0;
+}
+
+In this example, the loop iterates through the numbers array, adding each element to the sum variable.
+Regardless of the size of the numbers array, the loop will calculate the average correctly, demonstrating how loops contribute to efficiency and flexibility in programming.
+
+5. Discuss the importance of conditional statements (e.g., if, else) in C programming. Can you explain a situation where nested conditional statements are required to solve a complex problem?
+
+Importance of Conditional Statements in C Programming:
+
+- Control Flow: "if" and "else" statements control program flow.
+- Branching: They enable different actions based on conditions.
+- Error Handling: Crucial for error detection and response.
+- Complex Logic: Combine conditions for intricate decision-making.
+
+- Example:
+
+Scenario: Calculating final grades with different criteria.
+
+#include <stdio.h>
+
+int main()
+{
+	float scores[3];
+    	char *criteria[] = {"Exam", "Homework", "Attendance"};
+    	float weights[] = {0.4, 0.3, 0.1};
+    	float finalGrade = 0.0;
+
+    	for (int i = 0; i < 3; i++)
+	{
+        	printf("Enter %s score: ", criteria[i]);
+        	scanf("%f", &scores[i]);
+        
+        	if (scores[i] >= 90) finalGrade += weights[i] * scores[i];
+        	else if (scores[i] >= 80) finalGrade += 0.75 * weights[i] * scores[i];
+        	else if (scores[i] >= 70) finalGrade += 0.5 * weights[i] * scores[i];
+       		else finalGrade += 0.25 * weights[i] * scores[i];
+    	}
+    	printf("Final Grade: %.2f\n", finalGrade);
+    	return 0;
+}
+
+Overall, conditional statements are essential for handling complex decision-making processes and controlling the program's flow in C programming, making them a fundamental building block for solving a wide range of problems.
+
+* Open-End and Logical Questions
+
+1. Imagine you need to create a program that calculates the average of a list of numbers. How would you approach this problem step by step, starting from understanding the requirements to writing the code?
+
+#include <stdio.h>
+
+float calculateAverage(int numbers[], int length)
+{
+	if (length == 0)
+	{
+        	return 0.0;
+    	}
+    	int sum = 0;
+
+    	for (int i = 0; i < length; i++)
+	{
+        	sum += numbers[i];
+    	}
+    	return (float)sum / length;
+}
+
+int main()
+{
+	int numbers[] = {1, 2, 3, 4, 5};
+    	int length = sizeof(numbers) / sizeof(numbers[0]);
+	float average = calculateAverage(numbers, length);
+
+    	printf("The average is: %.2f\n", average);
+    	return 0;
+}
+
+2. Suppose you're given a task to find the largest prime number less than a specific
+value. Could you outline your thought process and the steps you'd take to solve this
+problem programmatically?
+
+#include <stdio.h>
+#include <stdbool.h>
+
+bool is_prime(int num)
+{
+	if (num < 2)
+	{
+        	return false; // Numbers less than 2 are not prime
+    	}
+    	for (int i = 2; i * i <= num; i++)
+	{
+        	if (num % i == 0)
+		{
+            		return false;
+        	}
+    	}
+    	return true;
+}
+
+int largest_prime_less_than_N(int N)
+{
+	while (N > 2)
+	{
+        	N--;
+        	if (is_prime(N))
+		{
+            	return N;
+        	}
+    	}
+    	return -1;
+}
+
+int main()
+{
+	int N = 50;
+    	int result = largest_prime_less_than_N(N);
+    
+	if (result != -1)
+	{
+        	printf("The largest prime less than %d is %d\n", N, result);
+    	}
+	else
+        	printf("No prime less than %d\n", N);
+    	return 0;
+}
+
+3. Let's say you're tasked with implementing a function that checks if a given string is a palindrome (reads the same forwards and backwards). What would be your high-level approach, and how would you break down the problem into smaller, manageable steps?
+
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int is_palindrome(const char *str)
+{
+	int left = 0;
+    	int right = strlen(str) - 1;
+
+    	while (left < right)
+	{
+        	while (!isalnum(str[left]))
+		{
+            		left++;
+        	}
+        	while (!isalnum(str[right]))
+		{
+            		right--;
+        	}
+        	char left_char = tolower(str[left]);
+       		char right_char = tolower(str[right]);
+
+        	if (left_char != right_char)
+		{
+            		return 0;
+        	}
+        	left++;
+        	right--;
+    	}
+    	return 1;
+}
+
+int main()
+{
+	const char *str1 = "A man, a plan, a canal, Panama";
+    	const char *str2 = "racecar";
+    	const char *str3 = "hello";
+
+    	printf("%d\n", is_palindrome(str1)); // 1 (True)
+    	printf("%d\n", is_palindrome(str2)); // 1 (True)
+    	printf("%d\n", is_palindrome(str3)); // 0 (False)
+
+    	return 0;
+}
+
+4. You're working on a team project, and you need to integrate your code with a colleague's code. Describe your approach to ensure smooth collaboration, avoid conflicts, and verify that the integrated code works correctly.
+
+- Communication: Discuss goals and expectations.
+- Version Control: Use Git for code management.
+- Code Review: Thoroughly review code for issues.
+- Branching: Create a dedicated integration branch.
+- Testing: Run tests on the integrated code.
+- CI/CD: Automate build and test processes.
+- Documentation: Update project docs.
+- Feedback: Encourage team feedback and iteration.
+- Rollback Plan: Prepare for potential issues.
+- Stakeholder Communication: Keep stakeholders informed.
+- Monitoring: Watch for production issues.
+- Post-Integration Review: Assess integration success.
+- Security and Compliance: Ensure requirements are met.
+- Deployment: Merge and deploy to production.
+
+* Coding Challenges
+
+1. Implement a function that reverses a string in C. Explain the time and space complexity of your solution.
+
+#include <stdio.h>
+#include <string.h>
+
+void reverseString(char *str)
+{
+	int length = strlen(str);
+    	int left = 0;
+    	int right = length - 1;
+
+    	while (left < right)
+	{
+        	char temp = str[left];
+        	str[left] = str[right];
+        	str[right] = temp;
+        	left++;
+        	right--;
+    	}
+}
+
+int main()
+{
+	char str[] = "Hello, World!";
+
+    	printf("Original string: %s\n", str);
+
+    	reverseString(str);
+
+    	printf("Reversed string: %s\n", str);
+	return 0;
+}
+
+- Time Complexity:
+
+The time complexity of this function is O(n/2), where 'n' is the length of the string. This is because we iterate through half of the string to perform the swap operations.
+
+- Space Complexity:
+
+The space complexity of this function is O(1) because it uses a constant amount of extra space regardless of the input string's size. It only uses a few integer variables and a temporary character variable for swapping, so the space usage does not depend on the string's length.
+
+2. Write a program in C that finds the factorial of a given positive integer using recursion. Explain how the recursive function works and why it terminates.
+
+#include <stdio.h>
+
+unsigned long long factorial(int n)
+{
+	if (n == 0)
+	{
+        	return 1;
+    	}
+    	return n * factorial(n - 1);
+}
+
+int main()
+{
+	int num;
+    
+    	printf("Enter a positive integer: ");
+    	scanf("%d", &num);
+    
+    	if (num < 0)
+	{
+        	printf("Factorial is undefined for negative numbers.\n");
+    	}
+	else
+	{
+        	unsigned long long result = factorial(num);
+        	printf("Factorial of %d is %llu\n", num, result);
+    	}
+    	return 0;
+}
+
+The recursive function terminates because it reduces the value of n with each recursive call, and it eventually reaches the base case where n equals 0. Once the base case is reached, the function starts returning values and unwinding the call stack, ultimately providing the final result.
+
+3. Write a C program to find the sum of all even numbers from 1 to N, where N is a user-defined positive integer. Explain your code's logic and how you handle user input.
+
+#include <stdio.h>
+
+int main()
+{
+	int N;
+    	int sum = 0;
+
+    	printf("Enter a positive integer N: ");
+    	scanf("%d", &N);
+
+    	if (N <= 0)
+	{
+        	printf("Please enter a positive integer.\n");
+        	return 1;
+    	}
+    	for (int i = 1; i <= N; i++)
+	{
+        	if (i % 2 == 0)
+		{
+            		sum += i;
+        	}
+    	}
+
+}
+
+4. Implement a C function that checks whether a given string is a palindrome or not. Explain the logic behind your code and provide test cases to verify its correctness.
+
+
