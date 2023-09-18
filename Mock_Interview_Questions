@@ -638,3 +638,468 @@ int main()
 }
 
 2. What is bubble sort and how does it work? Can you provide an example of its implementation in an array?
+
+Bubble sort is a simple sorting algorithm that repeatedly steps through a list of elements (usually an array) and compares adjacent elements. If the elements are in the wrong order, they are swapped. This process is repeated until the entire list is sorted. Bubble sort gets its name from the way smaller elements "bubble" to the top of the list while larger elements "sink" to the bottom.
+
+#include <stdio.h>
+#include "sort.h"
+
+void bubble_sort(int *array, size_t size)
+{
+	size_t i, j;
+    	int temp;
+
+    	if (array == NULL || size == 0)
+        	return;
+
+    	for (i = 0; i < size - 1; i++)
+    	{
+        	for (j = 0; j < size - 1 - i; j++)
+        	{
+            		if (array[j] > array[j + 1])
+            		{
+                		temp = array[j];
+                		array[j] = array[j + 1];
+                		array[j + 1] = temp;
+            		}
+        	}
+    	}
+}
+
+3. Can you explain the concept of selection sort and give an example of how it is used to sort an array?
+
+Selection sort is like finding the smallest item in a list and putting it at the front. Repeat this until the list is sorted.
+
+- Example:
+Unsorted list: [64, 25, 12, 22, 11]
+
+- Find the smallest (11) and put it first.
+- Find the next smallest (12) and put it next.
+- Repeat until done: [11, 12, 22, 25, 64]
+- Keep selecting and placing the smallest item until the whole list is sorted.
+
+#include <stdio.h>
+
+void selectionSort(int arr[], int n)
+{
+	int i, j, minIndex, temp;
+
+    	for (i = 0; i < n - 1; i++)
+	{
+        	minIndex = i;
+        	for (j = i + 1; j < n; j++)
+		{
+            		if (arr[j] < arr[minIndex])
+			{
+                	minIndex = j;
+            		}
+        	}
+        	temp = arr[i];
+        	arr[i] = arr[minIndex];
+        	arr[minIndex] = temp;
+    	}
+}
+
+int main()
+{
+	int arr[] = {64, 25, 12, 22, 11};
+    	int n = sizeof(arr) / sizeof(arr[0]);
+
+    	selectionSort(arr, n);
+
+    	printf("Sorted array: ");
+    	for (int i = 0; i < n; i++)
+	{
+        	printf("%d ", arr[i]);
+    	}
+    	return 0;
+}
+
+4. Can you explain how quicksort works and give an example of its implementation in an array?
+
+- Choose a Pivot: Select a pivot element from the array. The choice of pivot can affect the algorithm's performance. Common choices include the first element, the last element, or a random element.
+- Partitioning: Rearrange the elements in the array so that all elements less than the pivot are on the left, and all elements greater than the pivot are on the right. The pivot itself is in its final sorted position. This process is often called the "partition" step.
+- Recursion: Recursively apply quicksort to the sub-arrays on the left and right of the pivot until the entire array is sorted. This is the divide-and-conquer part of the algorithm.
+- Combine: No additional combining or merging step is necessary in quicksort because the elements are sorted in place during the partitioning step.
+
+#include <stdio.h>
+
+void swap(int* a, int* b)
+{
+	int t = *a;
+    	*a = *b;
+    	*b = t;
+}
+
+int partition(int arr[], int low, int high)
+{
+	int pivot = arr[high];
+    	int i = low - 1;
+
+    	for (int j = low; j < high; j++)
+	{
+        	if (arr[j] <= pivot)
+		{
+            		i++;
+            		swap(&arr[i], &arr[j]);
+        	}
+    	}
+    	swap(&arr[i + 1], &arr[high]);
+    	return i + 1;
+}
+
+void quicksort(int arr[], int low, int high)
+{
+    	if (low < high)
+	{
+        	int pi = partition(arr, low, high);
+        	quicksort(arr, low, pi - 1);
+        	quicksort(arr, pi + 1, high);
+    	}
+}
+
+int main()
+{
+	int arr[] = {3, 6, 8, 10, 1, 2, 1};
+    	int n = sizeof(arr) / sizeof(arr[0]);
+
+    	printf("Original array:\n");
+    	for (int i = 0; i < n; i++)
+	{
+        	printf("%d ", arr[i]);
+    	}
+
+    	quicksort(arr, 0, n - 1);
+
+    	printf("\nSorted array:\n");
+    	for (int i = 0; i < n; i++)
+	{
+        	printf("%d ", arr[i]);
+    	}
+    	return 0;
+}
+
+5. What is merge sort and how does it work? Can you provide an example of its implementation in an array?
+
+- Divide: Divide the unsorted array into two roughly equal halves.
+- Conquer: Recursively sort both halves until each sub-array is sorted.
+- Merge: Merge the two sorted sub-arrays back together to create a single, sorted array.
+- Repeat steps 1-3 until the entire array is sorted.
+
+#include <stdio.h>
+
+void merge(int arr[], int left[], int left_size, int right[], int right_size)
+{
+	int i = 0, j = 0, k = 0;
+
+    	while (i < left_size && j < right_size)
+	{
+        	if (left[i] < right[j])
+		{
+            		arr[k++] = left[i++];
+        	}
+		else
+		{
+            		arr[k++] = right[j++];
+        	}
+    	}
+
+    	while (i < left_size)
+	{
+        	arr[k++] = left[i++];
+    	}
+
+    	while (j < right_size)
+	{
+        	arr[k++] = right[j++];
+    	}
+}
+
+void merge_sort(int arr[], int size)
+{
+	if (size <= 1)
+	{
+        	return;
+    	}
+
+    	int mid = size / 2;
+    	int left[mid];
+    	int right[size - mid];
+
+    	for (int i = 0; i < mid; i++)
+	{
+        	left[i] = arr[i];
+    	}
+
+    	for (int i = mid; i < size; i++)
+	{
+        	right[i - mid] = arr[i];
+    	}
+
+    	merge_sort(left, mid);
+    	merge_sort(right, size - mid);
+
+    	merge(arr, left, mid, right, size - mid);
+}
+
+int main()
+{
+	int arr[] = {38, 27, 43, 3, 9, 82, 10};
+	int size = sizeof(arr) / sizeof(arr[0]);
+
+    	printf("Original array: ");
+    	for (int i = 0; i < size; i++)
+	{
+        	printf("%d ", arr[i]);
+    	}
+
+    	merge_sort(arr, size);
+
+    	printf("\nSorted array: ");
+    	for (int i = 0; i < size; i++)
+	{
+        	printf("%d ", arr[i]);
+    	}
+
+    	return 0;
+}
+
+6. What are the advantages and disadvantages of using bubble sort, selection sort, and insertion sort algorithms? How do their time complexities compare?
+
+- Bubble Sort:
+
+Advantages:
+Simple to understand and implement.
+Requires very little additional memory, as it only needs a constant amount of extra space.
+
+Disadvantages:
+Inefficient for large lists; its time complexity is poor.
+Performs poorly on almost-sorted or partially-sorted data, as it doesn't take advantage of existing order.
+Time Complexity: O(n^2) in the worst and average cases, where n is the number of elements to be sorted. In the best case (when the input is already sorted), it can be O(n).
+
+- Selection Sort:
+
+Advantages:
+Simple to implement.
+Requires minimal extra memory like Bubble Sort.
+
+Disadvantages:
+Inefficient for large lists; it has a poor time complexity.
+Like Bubble Sort, it doesn't perform well on nearly sorted data.
+Time Complexity: O(n^2) in the worst, average, and best cases. This makes it inefficient for large datasets.
+
+- Insertion Sort:
+
+Advantages:
+Simple to understand and implement.
+Performs well on small datasets or nearly sorted data.
+It's an adaptive algorithm, meaning it becomes more efficient when sorting partially ordered data.
+
+Disadvantages:
+Still inefficient for large lists compared to more advanced algorithms like merge sort or quicksort.
+Time Complexity:
+Worst-case: O(n^2)
+Average-case: O(n^2)
+Best-case: O(n) when the input is already sorted or nearly sorted.
+
+- Conclusion:
+Use them for small datasets or nearly sorted data.
+For large datasets, prefer more efficient algorithms like merge sort or quicksort (O(n log n)).
+
+7. Can you compare the time and space complexities of quick sort and merge sort algorithms? Under what conditions is one more suitable than the other?
+
+Quick Sort:
+- Time Complexity: O(n log n) average/best, O(n^2) worst
+- Space Complexity: O(log n) average, O(n) worst
+- In-place sorting
+- Not stable
+- Efficient for random data and limited memory
+
+Merge Sort:
+- Time Complexity: O(n log n) for all cases
+- Space Complexity: O(n)
+- Stable sorting
+- Consistent performance
+- Suitable for worst-case scenarios and when stability is essential
+
+* Data Structures
+
+1. How are arrays implemented and what are the advantages and disadvantages of
+using arrays over other data structures?
+
+Arrays are fundamental data structures used in computer science and programming. They are a collection of elements, each identified by an index or a key. Arrays are implemented in various ways depending on the programming language and the underlying memory management system, but here's a general overview of how they are typically implemented and their advantages and disadvantages.
+
+Implementation of Arrays:
+
+- Contiguous Memory Allocation: In most programming languages, arrays are implemented using contiguous memory allocation. This means that all elements of the array are stored in a single block of memory, and they are accessed using their indices.
+
+- Fixed Size: Arrays usually have a fixed size, which is determined at the time of declaration. Changing the size of an array is often not straightforward and may involve creating a new larger array and copying the elements from the old array to the new one.
+
+- Homogeneous Elements: Arrays typically store elements of the same data type. For example, an array can store integers, floating-point numbers, or characters, but all elements must be of the same type.
+
+Advantages of Arrays:
+- Fast Access Time
+- Memory Efficiency
+- Simple and Predictable
+- Efficient Element Iteration
+
+Disadvantages of Arrays:
+- Fixed Size
+- Wasted Memory
+- Inefficient Insertions and Deletions
+- Homogeneous Data Type
+- Not Suitable for Dynamic Data
+
+2. Can you explain the concept of a linked list and give an example of how it is used in C or Python?
+
+A linked list is a collection of elements, called nodes, where each node contains two parts: the actual data and a reference (or link) to the next node in the sequence. This structure allows you to represent a sequence of elements where each element (node) points to the next one, forming a chain-like structure.
+
+- Singly Linked List: In a singly linked list, each node has a reference to the next node, but not to the previous one. The last node typically points to null (or None in Python) to indicate the end of the list.
+
+- Doubly Linked List: In a doubly linked list, each node has references to both the next and the previous nodes. This allows for easier traversal in both directions, but it requires more memory to store the additional references.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* createNode(int data)
+{
+	struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    	newNode->data = data;
+    	newNode->next = NULL;
+    	return newNode;
+}
+
+int main()
+{
+	struct Node* head = createNode(1);
+    	struct Node* second = createNode(2);
+    	struct Node* third = createNode(3);
+
+    	head->next = second;
+    	second->next = third;
+
+    	struct Node* current = head;
+    	while (current != NULL)
+	{
+        	printf("%d -> ", current->data);
+        	current = current->next;
+    	}
+    	printf("NULL\n");
+
+    	return 0;
+}
+
+3. What are hash maps (or dictionaries) and how are they implemented? How do they compare to other data structures in terms of time complexity for insertion, deletion and search operations?
+
+- Data structures for storing key-value pairs.
+- Use a hash function to map keys to array indices.
+- Efficient for average-case operations.
+
+Time complexities:
+- Insertion: O(1) on average, O(n) worst-case.
+- Search: O(1) on average, O(n) worst-case.
+- Deletion: O(1) on average, O(n) worst-case.
+
+Comparison with Other Data Structures
+- Hash Maps vs. Trees (e.g., AVL, Red-Black):
+- Hash maps have faster average-case performance.
+- Trees have predictable worst-case O(log n) performance.
+- Choose based on application requirements.
+
+4. Can you explain the concept of a queue and give an example of how it is implemented?
+
+Queue is a linear data structure that follows the "First-In-First-Out" (FIFO) principle. In simpler terms, the first item added to the queue is the first one to be removed. Imagine a real-world queue of people waiting in line; the person who arrives first is the one to be served first.
+
+A queue has two primary operations:
+
+- Enqueue: This operation is used to add an item to the back of the queue. It's akin to a person joining the line at the end.
+- Dequeue: This operation is used to remove an item from the front of the queue, simulating the process of serving the first person in line.
+
+Queues are widely used in computer science and programming for various purposes, including managing tasks, scheduling processes, and implementing various algorithms.
+
+#include <stdio.h>
+
+#define MAX_SIZE 5
+
+int queue[MAX_SIZE];
+int front = -1;
+int rear = -1;
+
+void enqueue(int item)
+{
+	if (rear == MAX_SIZE - 1)
+	{
+        	printf("Queue is full. Cannot enqueue.\n");
+        	return;
+    	}
+    	if (front == -1)
+	{
+        	front = 0;
+    	}
+    	rear++;
+    	queue[rear] = item;
+}
+
+int dequeue()
+{
+	if (front == -1)
+	{
+        	printf("Queue is empty. Cannot dequeue.\n");
+        	return -1;
+    	}
+    	int item = queue[front];
+    	front++;
+    	if (front > rear)
+	{
+        	front = rear = -1;
+    	}
+    	return item;
+}
+
+int main()
+{
+	enqueue(1);
+    	enqueue(2);
+    	enqueue(3);
+
+    	printf("Dequeued item: %d\n", dequeue());
+
+    	return 0;
+}
+
+5. What is a stack data structure and how is it implemented? How does it differ from a queue and when is it more suitable to use a stack over a queue?
+
+Stack:
+- Last-In, First-Out (LIFO) data structure.
+- Implemented using arrays or linked lists.
+- Use cases: managing function calls, undo functionality, depth-first traversal.
+
+How a stack works:
+- Push: Adding an item to the top of the stack is called a "push" operation.
+- Pop: Removing the item from the top of the stack is called a "pop" operation.
+- Peek (or Top): Viewing the item at the top of the stack without removing it is called "peeking."
+- Empty: Checking if the stack is empty.
+
+Queue:
+- First-In, First-Out (FIFO) data structure.
+- Implemented using arrays or linked lists.
+- Use cases: task scheduling, breadth-first traversal, resource management.
+
+How a queue works:
+- Enqueue (or Push): Adding an item to the back of the queue.
+- Dequeue (or Pop): Removing an item from the front of the queue.
+- Front: Viewing the item at the front of the queue without removing it.
+- Rear (or Back): Viewing the item at the back of the queue without removing it.
+
+Choose between them based on whether you need LIFO or FIFO order for your data and the specific problem you're solving.
+
+* Open End Questions
+
+1. You are building a web application that keeps track of the top 10 most visited pages. What data structure would you use to store this information and why?
+
+
